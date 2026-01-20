@@ -1,5 +1,6 @@
 import ParallaxSection from './ParallaxSection';
 import ProjectCard from './ProjectCard';
+import AnimatedSection from './AnimatedSection';
 import parallaxBg from '@/assets/parallax-layer-1.jpg';
 
 const projects = [
@@ -35,27 +36,33 @@ const ProjectsSection = () => {
       className="py-20"
     >
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-secondary-foreground mb-4 text-center">
-          Proyectos <span className="text-primary">Destacados</span>
-        </h2>
-        <div className="w-20 h-1 bg-primary mx-auto mb-12 rounded-full" />
+        <AnimatedSection animation="fade-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary-foreground mb-4 text-center">
+            Proyectos <span className="text-primary">Destacados</span>
+          </h2>
+          <div className="w-20 h-1 bg-primary mx-auto mb-12 rounded-full" />
+        </AnimatedSection>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} {...project} />
+          {projects.map((project, index) => (
+            <AnimatedSection key={project.title} animation="fade-up" delay={index * 150}>
+              <ProjectCard {...project} />
+            </AnimatedSection>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <a
-            href="https://github.com/iscpatricio92?tab=repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-card border border-border rounded-lg text-card-foreground hover:border-primary hover:text-primary transition-all duration-300 font-medium"
-          >
-            Ver más proyectos en GitHub
-          </a>
-        </div>
+        <AnimatedSection animation="fade-up" delay={500}>
+          <div className="text-center mt-12">
+            <a
+              href="https://github.com/iscpatricio92?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-card border border-border rounded-lg text-card-foreground hover:border-primary hover:text-primary transition-all duration-300 font-medium"
+            >
+              Ver más proyectos en GitHub
+            </a>
+          </div>
+        </AnimatedSection>
       </div>
     </ParallaxSection>
   );

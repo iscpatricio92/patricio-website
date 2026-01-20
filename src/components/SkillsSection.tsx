@@ -1,4 +1,5 @@
 import { useParallax } from '@/hooks/useParallax';
+import AnimatedSection from './AnimatedSection';
 
 const skills = [
   { name: 'TypeScript', level: 95 },
@@ -45,45 +46,45 @@ const SkillsSection = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-center">
-          Skills & <span className="text-primary">Tecnologías</span>
-        </h2>
-        <div className="w-20 h-1 bg-primary mx-auto mb-12 rounded-full" />
+        <AnimatedSection animation="fade-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-center">
+            Skills & <span className="text-primary">Tecnologías</span>
+          </h2>
+          <div className="w-20 h-1 bg-primary mx-auto mb-12 rounded-full" />
+        </AnimatedSection>
 
         <div className="max-w-3xl mx-auto">
           {skills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="mb-6"
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <div className="flex justify-between mb-2">
-                <span className="font-medium text-foreground">{skill.name}</span>
-                <span className="font-mono text-primary">{skill.level}%</span>
+            <AnimatedSection key={skill.name} animation="fade-left" delay={index * 80}>
+              <div className="mb-6">
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium text-foreground">{skill.name}</span>
+                  <span className="font-mono text-primary">{skill.level}%</span>
+                </div>
+                <div className="h-3 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-primary to-chart-2 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${skill.level}%` }}
+                  />
+                </div>
               </div>
-              <div className="h-3 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-primary to-chart-2 rounded-full transition-all duration-1000 ease-out"
-                  style={{ width: `${skill.level}%` }}
-                />
-              </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
 
         {/* Tech badges */}
-        <div className="flex flex-wrap justify-center gap-3 mt-12 max-w-4xl mx-auto">
-          {['Sequelize', 'Passport.js', 'Webpack', 'Git', 'Docker', 'AWS', 'Agile', 'Scrum'].map((tech) => (
-            <span
-              key={tech}
-              className="px-4 py-2 bg-card rounded-full text-card-foreground border border-border hover:border-primary hover:text-primary transition-all duration-200 font-medium"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
+        <AnimatedSection animation="fade-up" delay={400}>
+          <div className="flex flex-wrap justify-center gap-3 mt-12 max-w-4xl mx-auto">
+            {['Sequelize', 'Passport.js', 'Webpack', 'Git', 'Docker', 'AWS', 'Agile', 'Scrum'].map((tech) => (
+              <span
+                key={tech}
+                className="px-4 py-2 bg-card rounded-full text-card-foreground border border-border hover:border-primary hover:text-primary transition-all duration-200 font-medium"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );
