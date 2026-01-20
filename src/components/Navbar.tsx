@@ -13,10 +13,24 @@ const navItems = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Detect active section
+      const sections = navItems.map(item => item.href.slice(1));
+      for (const section of sections.reverse()) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -31,9 +45,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? 'bg-secondary/95 backdrop-blur-md shadow-lg'
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/50'
           : 'bg-transparent'
       }`}
     >
@@ -51,7 +65,7 @@ const Navbar = () => {
           </a>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
@@ -60,7 +74,11 @@ const Navbar = () => {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium"
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    activeSection === item.href.slice(1)
+                      ? 'text-primary bg-primary/10'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -70,7 +88,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-secondary-foreground hover:text-primary transition-colors"
+            className="md:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -79,22 +97,28 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <ul className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                  className="block text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="md:hidden mt-4 pb-4 animate-fade-in">
+            <ul className="space-y-2">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.href);
+                    }}
+                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                      activeSection === item.href.slice(1)
+                        ? 'text-primary bg-primary/10'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </nav>
