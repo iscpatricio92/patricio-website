@@ -69,19 +69,19 @@ const ExperienceCard = ({ experience, isActive, onClick, index }: {
     <AnimatedSection animation="fade-left" delay={index * 150}>
       <div 
         className={cn(
-          "relative pl-8 pb-8 cursor-pointer group",
-          "before:absolute before:left-0 before:top-2 before:w-4 before:h-4 before:rounded-full before:border-2 before:border-primary before:bg-background before:z-10 before:transition-all before:duration-300",
-          isActive && "before:bg-primary before:scale-125",
-          "after:absolute after:left-[7px] after:top-6 after:w-0.5 after:h-[calc(100%-1rem)] after:bg-border",
+          "relative pl-10 pb-10 cursor-pointer group",
+          "before:absolute before:left-0 before:top-3 before:w-4 before:h-4 before:rounded-full before:border-2 before:border-primary before:bg-background before:z-10 before:transition-all before:duration-300",
+          isActive && "before:bg-primary before:scale-125 before:shadow-lg before:shadow-primary/50",
+          "after:absolute after:left-[7px] after:top-7 after:w-0.5 after:h-[calc(100%-1.75rem)] after:bg-border",
           "last:after:hidden"
         )}
         onClick={onClick}
       >
         <div 
           className={cn(
-            "bg-card border border-border rounded-lg p-6 transition-all duration-300",
-            "hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5",
-            isActive && "border-primary shadow-lg shadow-primary/10"
+            "stat-card p-6 transition-all duration-500",
+            "hover:border-primary/30",
+            isActive && "border-primary/50 shadow-lg shadow-primary/10"
           )}
         >
           <div className="flex items-start justify-between mb-4">
@@ -94,17 +94,17 @@ const ExperienceCard = ({ experience, isActive, onClick, index }: {
                 {experience.company}
               </div>
             </div>
-            <button className="text-muted-foreground hover:text-primary transition-colors">
+            <button className="text-muted-foreground hover:text-primary transition-colors p-2">
               {isActive ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
             </button>
           </div>
           
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4" />
               {experience.period}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4" />
               {experience.location}
             </div>
@@ -121,12 +121,12 @@ const ExperienceCard = ({ experience, isActive, onClick, index }: {
             </p>
             
             <div className="mb-4">
-              <h4 className="text-sm font-semibold text-foreground mb-2">Logros principales:</h4>
+              <h4 className="text-sm font-semibold text-foreground mb-3">Logros principales:</h4>
               <ul className="space-y-2">
                 {experience.achievements.map((achievement, idx) => (
                   <li 
                     key={idx}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                    className="flex items-start gap-3 text-sm text-muted-foreground"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                     {achievement}
@@ -139,7 +139,7 @@ const ExperienceCard = ({ experience, isActive, onClick, index }: {
               {experience.technologies.map((tech) => (
                 <span 
                   key={tech}
-                  className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                  className="px-3 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20"
                 >
                   {tech}
                 </span>
@@ -156,15 +156,20 @@ const ExperienceSection = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   return (
-    <section id="experience" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section id="experience" className="relative py-32 bg-background overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-transparent to-secondary/20" />
+
+      <div className="container mx-auto px-6 relative z-10">
         <AnimatedSection animation="fade-up">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Experiencia Laboral
+          <div className="text-center mb-20">
+            <p className="text-primary font-medium mb-4 uppercase tracking-widest text-sm">Trayectoria</p>
+            <h2 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
+              Experiencia
+              <span className="gradient-text"> Laboral</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Mi trayectoria profesional en el desarrollo web, construyendo soluciones 
+              Mi camino profesional en el desarrollo web, construyendo soluciones 
               digitales que hacen la diferencia.
             </p>
           </div>
