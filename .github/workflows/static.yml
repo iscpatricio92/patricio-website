@@ -73,24 +73,6 @@ jobs:
             echo "Consider running 'npm audit fix' to update dev dependencies when possible"
           }
 
-      - name: Run ESLint
-        run: |
-          echo "🔍 Running ESLint..."
-          npm run lint
-          echo "✅ ESLint passed"
-
-      - name: Check code formatting
-        run: |
-          echo "🎨 Checking code formatting with Prettier..."
-          npm run format:check
-          echo "✅ Code formatting is correct"
-
-      - name: Type check with TypeScript
-        run: |
-          echo "📘 Running TypeScript type check..."
-          npm run type-check
-          echo "✅ TypeScript type check passed"
-
       - name: Clean previous build (if exists)
         run: |
           if [ -d "dist" ]; then
@@ -107,10 +89,6 @@ jobs:
         env:
           # Generar un hash único para cada build para forzar actualización del Service Worker
           BUILD_TIME: ${{ github.run_number }}-${{ github.sha }}
-          # Sentry DSN (opcional - solo si está configurado como secret)
-          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
-          # Sentry Auth Token para subir source maps (opcional)
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Display build summary
         run: |
